@@ -1,0 +1,101 @@
+{
+  "properties": [
+    {
+      "name": "health.monitor.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable or disable health monitoring",
+      "defaultValue": true
+    },
+    {
+      "name": "health.monitor.app.heartbeatIntervalMs",
+      "type": "java.lang.Long",
+      "description": "Heartbeat interval in milliseconds",
+      "defaultValue": 5000
+    },
+    {
+      "name": "health.monitor.app.timeoutMs",
+      "type": "java.lang.Long",
+      "description": "Timeout for heartbeat check in milliseconds",
+      "defaultValue": 2000
+    },
+    {
+      "name": "health.monitor.app.hangThresholdMs",
+      "type": "java.lang.Long",
+      "description": "Threshold for hang detection in milliseconds",
+      "defaultValue": 10000
+    },
+    {
+      "name": "health.monitor.database.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable database health check",
+      "defaultValue": true
+    },
+    {
+      "name": "health.monitor.redis.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable Redis health check",
+      "defaultValue": true
+    },
+    {
+      "name": "health.monitor.kafka.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable Kafka health check",
+      "defaultValue": true
+    },
+    {
+      "name": "health.monitor.external.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable external API health check",
+      "defaultValue": true
+    },
+    {
+      "name": "health.monitor.external.url",
+      "type": "java.lang.String",
+      "description": "External API URL for health check",
+      "defaultValue": "https://api.weather.com/health"
+    },
+    {
+      "name": "health.monitor.external.timeout",
+      "type": "java.lang.Long",
+      "description": "Timeout for external API health check in milliseconds",
+      "defaultValue": 3000
+    },
+    {
+      "name": "health.monitor.logs.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable log monitoring",
+      "defaultValue": true
+    },
+    {
+      "name": "health.monitor.logs.recentErrorsThreshold",
+      "type": "java.lang.Integer",
+      "description": "Threshold for recent errors to mark health as DOWN",
+      "defaultValue": 5
+    },
+    {
+      "name": "health.monitor.logs.email.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable email alerts",
+      "defaultValue": true
+    },
+    {
+      "name": "health.monitor.logs.email.to",
+      "type": "java.lang.String",
+      "description": "Email address for alerts",
+      "defaultValue": "ops@company.com"
+    },
+    {
+      "name": "health.monitor.logs.webhook.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable webhook alerts",
+      "defaultValue": true
+    },
+    {
+      "name": "health.monitor.logs.webhook.url",
+      "type": "java.lang.String",
+      "description": "Webhook URL for alerts",
+      "defaultValue": "https://alerts.company.com/webhook"
+    }
+  ]
+}
+

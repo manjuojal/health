@@ -1,0 +1,40 @@
+health:
+  monitor:
+    enabled: true
+    database:
+      enabled: true
+      statusEndpointEnabled: false  # Enable /api/health/db-status endpoint
+    external:
+      enabled: true
+      url: https://api.weather.com/health
+      timeout: 3000
+      nonCritical: false  # Set to true if external API failures shouldn't affect overall health
+    logs:
+      enabled: true
+      recentErrorsThreshold: 5
+      email:
+        enabled: true
+        to: ops@company.com
+        from: health-monitor@company.com
+        subject: Health Monitor Alert
+      webhook:
+        enabled: true
+        url: https://alerts.company.com/webhook
+        timeout: 5000
+
+# Actuator endpoints configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true

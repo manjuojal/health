@@ -1,0 +1,100 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: scheduler-demo-app
+  boot:
+    admin:
+      client:
+        url: http://localhost:8085  # Admin Server URL
+        instance:
+          name: ${spring.application.name}
+          management-url: http://localhost:${server.port}
+          health-url: http://localhost:${server.port}/actuator/health
+          service-url: http://localhost:${server.port}
+          metadata:
+            user.name: ${SCHEDULER_ACTUATOR_USERNAME:actuator}
+            user.password: ${SCHEDULER_ACTUATOR_PASSWORD:change-this-password}
+        username: ${ADMIN_SERVER_USERNAME:admin}
+        password: ${ADMIN_SERVER_PASSWORD:change-this-password}
+    autoconfigure:
+      exclude:
+        - org.springframework.boot.actuate.autoconfigure.jdbc.DataSourceHealthContributorAutoConfiguration  # Exclude Spring Boot's default to use our custom DatabaseHealthIndicator
+  security:
+    user:
+      name: ${SCHEDULER_ACTUATOR_USERNAME:actuator}
+      password: ${SCHEDULER_ACTUATOR_PASSWORD:change-this-password}
+      roles: ACTUATOR_ADMIN,JOB_OPERATOR
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: false
+
+# Health Monitor Configuration
+health:
+  monitor:
+    enabled: true # Enable Health Monitor
+    database:
+      enabled: false
+      statusEndpointEnabled: true  # Enable /api/health/db-status endpoint
+    external:
+      enabled: true  # Disable external API check for scheduler demo
+      url: https://jsonplaceholder.typicode.com/todos/1
+    logs:
+      enabled: true
+      recentErrorsThreshold: 1  # Threshold for error monitoring
+      email:
+        enabled: true  # Disable email for demo
+      webhook:
+        enabled: false  # Disable webhook for demo
+
+scheduler:
+  monitor:
+    enabled: true
+    max-task-duration-ms: 8000    # mark hung if job runs >8s
+    max-idle-duration-ms: 60000   # mark down if nothing completes for 60s
+    min-executions-before-idle-check: 1
+
+# Actuator Configuration for Admin Server
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers,logfile
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: when_authorized
+      roles: ACTUATOR_ADMIN
+    logfile:
+      enabled: true
+      external-file: ${LOG_FILE_PATH:logs/scheduler-demo-app.log}
+  health:
+    db:
+      enabled: true  # Enable db health check - our custom indicator will be used
+    ssl:
+      enabled: false
+    ping:
+      enabled: false
+    readiness-state:
+      enabled: false
+
+# Logging Configuration
+logging:
+  level:
+    com.smartuser.scheduler: INFO
+    com.smartuser.healthmonitor: DEBUG
+    org.springframework.boot.actuate: INFO
+    org.springframework.scheduling: DEBUG
+    de.codecentric.boot.admin: DEBUG  # Debug Admin Client registration
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    name: ${LOG_FILE_PATH:logs/scheduler-demo-app.log}
+

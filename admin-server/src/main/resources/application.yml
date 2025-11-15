@@ -1,0 +1,61 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: admin-server
+  security:
+    user:
+      name: ${ADMIN_SERVER_USERNAME:admin}
+      password: ${ADMIN_SERVER_PASSWORD:change-this-password}
+      roles: ADMIN
+  mvc:
+    throw-exception-if-no-handler-found: false
+  # Mail Configuration for Notifications
+  mail:
+    host: smtp.gmail.com  # Change to your SMTP server
+    port: 587
+    username: ${MAIL_USERNAME:your-email@gmail.com}  # Set via environment variable or change here
+    password: ${MAIL_PASSWORD:your-password}  # Set via environment variable or change here
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+# Spring Boot Admin Server Configuration
+spring.boot.admin:
+  context-path: /
+  monitor:
+    period: 10s
+    status-lifetime: 10s
+  instance-proxy:
+    ignored-headers: Cookie,Set-Cookie,Authorization
+  ui:
+    title: Health Monitor Dashboard
+    brand: '<img src="assets/img/logo.svg" style="height: 40px; margin-right: 10px;"><span style="font-size: 20px; font-weight: bold;">Health Monitor</span>'
+    favicon: assets/img/favicon.png
+    favicon-danger: assets/img/favicon.png
+    login-icon: assets/img/logo.svg
+  notify:
+    mail:
+      enabled: true
+      only-on-down: true  # Only send emails when services go DOWN
+      monitor-components: true  # Monitor component-level health (e.g., database)
+      component-check-interval: 30000  # Check component health every 30 seconds (in milliseconds)
+      to: ${MAIL_TO:?MAIL_TO environment variable must be set}  # Recipient email addresses (comma-separated)
+      from: ${MAIL_FROM:?MAIL_FROM environment variable must be set}  # Sender email address
+      subject: "Health Monitor Alert: Service is DOWN"
+      component-subject: "Health Monitor Alert: Database is DOWN"  # Subject for component alerts
+
+# Logging to debug registration issues
+logging:
+  level:
+    de.codecentric.boot.admin: DEBUG
+    org.springframework.boot.actuate: INFO
+

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="40" viewBox="0 0 180 40">
+  <!-- Health Monitor Icon (Heartbeat/Pulse) -->
+  <g transform="translate(5, 8)">
+    <!-- Heartbeat line -->
+    <path d="M 0 20 L 4 15 L 8 20 L 12 10 L 16 20 L 20 12 L 24 20" 
+          stroke="#4CAF50" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Pulse dots -->
+    <circle cx="0" cy="20" r="2.5" fill="#4CAF50"/>
+    <circle cx="12" cy="10" r="2.5" fill="#4CAF50"/>
+    <circle cx="24" cy="20" r="2.5" fill="#4CAF50"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="35" y="26" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2c3e50">
+    Health Monitor
+  </text>
+</svg>
