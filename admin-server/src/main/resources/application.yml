@@ -53,9 +53,9 @@ spring.boot.admin:
       subject: "Health Monitor Alert: Service is DOWN"
       component-subject: "Health Monitor Alert: Database is DOWN"  # Subject for component alerts
 
-# Logging to debug registration issues
+# Logging Configuration
 logging:
   level:
-    de.codecentric.boot.admin: DEBUG
+    de.codecentric.boot.admin: INFO
     org.springframework.boot.actuate: INFO
 
